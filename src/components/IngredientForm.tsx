@@ -42,6 +42,7 @@ export default function IngredientForm() {
 
     return (
         <form onSubmit={handleSubmit} className="mb-6 space-y-4">
+            <h2 className="text-lg font-semibold">Create Ingredients</h2>
             <div className="flex flex-col gap-2">
                 <input
                     className="border p-2 rounded bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white focus:outline-none focus:ring focus:ring-blue-300"
@@ -81,7 +82,7 @@ export default function IngredientForm() {
             </div>
             <button
                 type="submit"
-                className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded"
+                className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
             >
                 Add Ingredient
             </button>

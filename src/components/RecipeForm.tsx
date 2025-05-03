@@ -66,7 +66,7 @@ export default function RecipeForm() {
 
     return (
         <form onSubmit={handleSubmit} className="space-y-4 mb-6">
-            <h2 className="text-lg font-semibold">Create Recipe</h2>
+            <h2 className="text-lg font-semibold">Create Recipes</h2>
             <div className="flex gap-2">
                 <input
                     type="text"
@@ -135,7 +135,7 @@ export default function RecipeForm() {
                     type="submit"
                     className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
                 >
-                    Submit Recipe
+                    Add Recipe
                 </button>
             </div>
         </form>
