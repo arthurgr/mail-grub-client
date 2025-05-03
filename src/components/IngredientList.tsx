@@ -9,7 +9,6 @@ export default function IngredientList() {
 
   const size = 5;
   const queryClient = useQueryClient();
-
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const { data, isLoading } = useQuery({
@@ -34,7 +33,7 @@ export default function IngredientList() {
     setSearch(searchInput);
   };
 
-  if (isLoading) return <div className="text-gray-600">Loading...</div>;
+  if (isLoading) return <div className="text-gray-600 dark:text-gray-300">Loading...</div>;
 
   return (
       <div className="space-y-4">
@@ -44,7 +43,7 @@ export default function IngredientList() {
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
               placeholder="Search ingredients..."
-              className="border px-3 py-2 rounded w-full"
+              className="border p-2 rounded w-full bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white focus:outline-none focus:ring"
           />
           <button
               type="submit"
@@ -55,26 +54,26 @@ export default function IngredientList() {
         </form>
 
         <div className="overflow-x-auto">
-          <table className="min-w-full table-auto border text-sm">
-            <thead className="bg-gray-100">
+          <table className="min-w-full table-auto text-sm border border-gray-200 dark:border-gray-700">
+            <thead className="bg-gray-100 dark:bg-gray-800">
             <tr>
-              <th className="border px-4 py-2 text-left">Name</th>
-              <th className="border px-4 py-2 text-left">Measurement</th>
-              <th className="border px-4 py-2 text-left">Purchase Size</th>
-              <th className="border px-4 py-2 text-left">Avg Cost</th>
-              <th className="border px-4 py-2 text-left">Cost/Oz</th>
-              <th className="border px-4 py-2 text-left">Actions</th>
+              <th className="border border-gray-200 dark:border-gray-700 px-4 py-2 text-left">Name</th>
+              <th className="border border-gray-200 dark:border-gray-700 px-4 py-2 text-left">Measurement</th>
+              <th className="border border-gray-200 dark:border-gray-700 px-4 py-2 text-left">Purchase Size</th>
+              <th className="border border-gray-200 dark:border-gray-700 px-4 py-2 text-left">Avg Cost</th>
+              <th className="border border-gray-200 dark:border-gray-700 px-4 py-2 text-left">Cost/Oz</th>
+              <th className="border border-gray-200 dark:border-gray-700 px-4 py-2 text-left">Actions</th>
             </tr>
             </thead>
             <tbody>
             {data?.content?.map((i: any) => (
-                <tr key={i.id} className="hover:bg-gray-50">
-                  <td className="border px-4 py-2">{i.name}</td>
-                  <td className="border px-4 py-2">{i.measurementType}</td>
-                  <td className="border px-4 py-2">{i.purchaseSize}</td>
-                  <td className="border px-4 py-2">${i.averageCost}</td>
-                  <td className="border px-4 py-2">${i.costPerOunce}</td>
-                  <td className="border px-4 py-2">
+                <tr key={i.id} className="hover:bg-gray-50 dark:hover:bg-gray-700">
+                  <td className="border border-gray-200 dark:border-gray-700 px-4 py-2">{i.name}</td>
+                  <td className="border border-gray-200 dark:border-gray-700 px-4 py-2">{i.measurementType}</td>
+                  <td className="border border-gray-200 dark:border-gray-700 px-4 py-2">{i.purchaseSize}</td>
+                  <td className="border border-gray-200 dark:border-gray-700 px-4 py-2">${i.averageCost}</td>
+                  <td className="border border-gray-200 dark:border-gray-700 px-4 py-2">${i.costPerOunce}</td>
+                  <td className="border border-gray-200 dark:border-gray-700 px-4 py-2">
                     <button
                         onClick={() => deleteMutation.mutate(i.id)}
                         className="text-red-500 hover:underline"
@@ -94,13 +93,13 @@ export default function IngredientList() {
               disabled={page === 0}
               className={`px-4 py-2 rounded ${
                   page === 0
-                      ? "bg-gray-200 cursor-not-allowed"
+                      ? "bg-gray-200 dark:bg-gray-700 cursor-not-allowed text-gray-500"
                       : "bg-blue-500 text-white hover:bg-blue-600"
               }`}
           >
             Previous
           </button>
-          <span>
+          <span className="text-gray-700 dark:text-gray-300">
           Page {data?.meta?.page + 1} of {data?.meta?.totalPages}
         </span>
           <button
@@ -108,7 +107,7 @@ export default function IngredientList() {
               disabled={data?.meta?.last}
               className={`px-4 py-2 rounded ${
                   data?.meta?.last
-                      ? "bg-gray-200 cursor-not-allowed"
+                      ? "bg-gray-200 dark:bg-gray-700 cursor-not-allowed text-gray-500"
                       : "bg-blue-500 text-white hover:bg-blue-600"
               }`}
           >
