@@ -1,4 +1,3 @@
-// src/components/RecipeForm.tsx
 import React, { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
@@ -74,14 +73,14 @@ export default function RecipeForm() {
                     placeholder="Recipe name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="border px-3 py-2 rounded w-full"
+                    className="border px-3 py-2 rounded w-full bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                 />
                 <input
                     type="number"
                     placeholder="Items made"
                     value={itemsMade}
                     onChange={(e) => setItemsMade(Number(e.target.value))}
-                    className="border px-3 py-2 rounded w-40"
+                    className="border px-3 py-2 rounded w-40 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                 />
             </div>
 
@@ -94,7 +93,7 @@ export default function RecipeForm() {
                             updated[idx].ingredientId = Number(e.target.value);
                             setIngredients(updated);
                         }}
-                        className="border px-3 py-2 rounded w-1/3"
+                        className="border px-3 py-2 rounded w-1/3 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                     >
                         {ingredientData?.map((i) => (
                             <option key={i.id} value={i.id}>
@@ -111,7 +110,7 @@ export default function RecipeForm() {
                             updated[idx].amount = Number(e.target.value);
                             setIngredients(updated);
                         }}
-                        className="border px-3 py-2 rounded w-1/3"
+                        className="border px-3 py-2 rounded w-1/3 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                     />
                     <button
                         type="button"

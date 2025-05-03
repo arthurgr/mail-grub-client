@@ -24,8 +24,7 @@ export default function RecipeList() {
     });
 
     const deleteMutation = useMutation({
-        mutationFn: (id: number) =>
-            axios.delete(`${API_BASE_URL}/recipes/delete/${id}`),
+        mutationFn: (id: number) => axios.delete(`${API_BASE_URL}/recipes/delete/${id}`),
         onSuccess: () => queryClient.invalidateQueries(["recipes"]),
     });
 
@@ -35,7 +34,7 @@ export default function RecipeList() {
         setSearch(searchInput);
     };
 
-    if (isLoading) return <div>Loading recipes...</div>;
+    if (isLoading) return <div className="text-gray-600 dark:text-gray-300">Loading recipes...</div>;
 
     return (
         <div className="space-y-4 mt-8">
@@ -45,7 +44,7 @@ export default function RecipeList() {
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)}
                     placeholder="Search recipes..."
-                    className="border px-3 py-2 rounded w-full"
+                    className="border p-2 rounded w-full bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white focus:outline-none focus:ring"
                 />
                 <button
                     type="submit"
@@ -56,28 +55,28 @@ export default function RecipeList() {
             </form>
 
             <div className="overflow-x-auto">
-                <table className="min-w-full table-auto border text-sm">
-                    <thead className="bg-gray-100">
+                <table className="min-w-full table-auto text-sm border border-gray-200 dark:border-gray-700">
+                    <thead className="bg-gray-100 dark:bg-gray-800">
                     <tr>
-                        <th className="border px-4 py-2 text-left">Name</th>
-                        <th className="border px-4 py-2 text-left">Items Made</th>
-                        <th className="border px-4 py-2 text-left">Ingredients</th>
-                        <th className="border px-4 py-2 text-left">Total Cost</th>
-                        <th className="border px-4 py-2 text-left">Cost per Item</th>
-                        <th className="border px-4 py-2 text-left">Actions</th>
+                        <th className="border border-gray-200 dark:border-gray-700 px-4 py-2 text-left">Name</th>
+                        <th className="border border-gray-200 dark:border-gray-700 px-4 py-2 text-left">Items Made</th>
+                        <th className="border border-gray-200 dark:border-gray-700 px-4 py-2 text-left">Ingredients</th>
+                        <th className="border border-gray-200 dark:border-gray-700 px-4 py-2 text-left">Total Cost</th>
+                        <th className="border border-gray-200 dark:border-gray-700 px-4 py-2 text-left">Cost per Item</th>
+                        <th className="border border-gray-200 dark:border-gray-700 px-4 py-2 text-left">Actions</th>
                     </tr>
                     </thead>
                     <tbody>
                     {data?.content?.map((r: any) => (
-                        <tr key={r.id} className="hover:bg-gray-50">
-                            <td className="border px-4 py-2">{r.name}</td>
-                            <td className="border px-4 py-2">{r.itemsMade}</td>
-                            <td className="border px-4 py-2">
+                        <tr key={r.id} className="hover:bg-gray-50 dark:hover:bg-gray-700">
+                            <td className="border border-gray-200 dark:border-gray-700 px-4 py-2">{r.name}</td>
+                            <td className="border border-gray-200 dark:border-gray-700 px-4 py-2">{r.itemsMade}</td>
+                            <td className="border border-gray-200 dark:border-gray-700 px-4 py-2">
                                 {r.ingredients.map((ing: any) => `${ing.name} (${ing.amount})`).join(", ")}
                             </td>
-                            <td className="border px-4 py-2">${r.totalCost}</td>
-                            <td className="border px-4 py-2">${r.costPerItem}</td>
-                            <td className="border px-4 py-2">
+                            <td className="border border-gray-200 dark:border-gray-700 px-4 py-2">${r.totalCost}</td>
+                            <td className="border border-gray-200 dark:border-gray-700 px-4 py-2">${r.costPerItem}</td>
+                            <td className="border border-gray-200 dark:border-gray-700 px-4 py-2">
                                 <button
                                     onClick={() => deleteMutation.mutate(r.id)}
                                     className="text-red-500 hover:underline"
@@ -97,13 +96,13 @@ export default function RecipeList() {
                     disabled={page === 0}
                     className={`px-4 py-2 rounded ${
                         page === 0
-                            ? "bg-gray-200 cursor-not-allowed"
+                            ? "bg-gray-200 dark:bg-gray-700 cursor-not-allowed text-gray-500"
                             : "bg-blue-500 text-white hover:bg-blue-600"
                     }`}
                 >
                     Previous
                 </button>
-                <span>
+                <span className="text-gray-700 dark:text-gray-300">
           Page {data?.meta?.page + 1} of {data?.meta?.totalPages}
         </span>
                 <button
@@ -111,7 +110,7 @@ export default function RecipeList() {
                     disabled={data?.meta?.last}
                     className={`px-4 py-2 rounded ${
                         data?.meta?.last
-                            ? "bg-gray-200 cursor-not-allowed"
+                            ? "bg-gray-200 dark:bg-gray-700 cursor-not-allowed text-gray-500"
                             : "bg-blue-500 text-white hover:bg-blue-600"
                     }`}
                 >
