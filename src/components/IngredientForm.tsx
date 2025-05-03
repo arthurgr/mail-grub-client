@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 export default function IngredientForm() {
     const queryClient = useQueryClient();
     const [form, setForm] = useState({
@@ -13,7 +15,7 @@ export default function IngredientForm() {
 
     const mutation = useMutation({
         mutationFn: (newIngredient) =>
-            axios.post("/ingredients/add", newIngredient),
+            axios.post(`${API_BASE_URL}/ingredients/add`, newIngredient),
         onSuccess: () => queryClient.invalidateQueries(["ingredients"]),
     });
 
