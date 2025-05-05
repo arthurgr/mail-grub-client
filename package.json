@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "dependencies": {
     "@tanstack/react-query": "^4.29.20",
@@ -15,9 +17,11 @@
     "react-router-dom": "^7.5.3"
   },
   "devDependencies": {
+    "@types/react": "^19.1.2",
     "@vitejs/plugin-react": "^4.0.3",
     "autoprefixer": "^10.4.15",
     "postcss": "^8.4.33",
+    "prettier": "^3.5.3",
     "tailwindcss": "^3.4.3",
     "vite": "^5.2.0"
   }
