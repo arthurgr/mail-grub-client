@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-
-type Ingredient = {
-  id: number;
-  name: string;
-};
+import RecipeFormFields from './RecipeFormFields';
 
 type Recipe = {
   id: number;
@@ -24,7 +20,6 @@ export default function EditRecipeModal({
   const queryClient = useQueryClient();
   const [name, setName] = useState(recipe.name);
   const [itemsMade, setItemsMade] = useState(recipe.itemsMade);
-
   const [ingredients, setIngredients] = useState(
     recipe.ingredients.map((i: any) => ({
       ingredientId: i.ingredientId ?? i.id,
@@ -56,16 +51,6 @@ export default function EditRecipeModal({
     },
   });
 
-  const updateIngredient = (
-    idx: number,
-    field: 'ingredientId' | 'amount',
-    value: any,
-  ) => {
-    setIngredients((prev) =>
-      prev.map((i, iIdx) => (iIdx === idx ? { ...i, [field]: value } : i)),
-    );
-  };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     mutation.mutate({
@@ -83,42 +68,15 @@ export default function EditRecipeModal({
           Edit Recipe
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <input
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="w-full border p-2 rounded dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+          <RecipeFormFields
+            name={name}
+            setName={setName}
+            itemsMade={itemsMade}
+            setItemsMade={setItemsMade}
+            ingredients={ingredients}
+            setIngredients={setIngredients}
+            ingredientData={ingredientData}
           />
-          <input
-            type="number"
-            value={itemsMade}
-            onChange={(e) => setItemsMade(Number(e.target.value))}
-            className="w-full border p-2 rounded dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-          />
-          {ingredients.map((ing, idx) => (
-            <div key={idx} className="flex gap-2 items-center">
-              <select
-                value={ing.ingredientId}
-                onChange={(e) =>
-                  updateIngredient(idx, 'ingredientId', Number(e.target.value))
-                }
-                className="w-1/2 border p-2 rounded dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-              >
-                {ingredientData?.map((i: Ingredient) => (
-                  <option key={i.id} value={i.id}>
-                    {i.name}
-                  </option>
-                ))}
-              </select>
-              <input
-                type="number"
-                value={ing.amount}
-                onChange={(e) =>
-                  updateIngredient(idx, 'amount', Number(e.target.value))
-                }
-                className="w-1/2 border p-2 rounded dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-              />
-            </div>
-          ))}
           <div className="flex justify-end gap-2">
             <button
               type="button"
