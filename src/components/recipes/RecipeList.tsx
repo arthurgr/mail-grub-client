@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
+import { AnimatePresence, motion } from 'framer-motion';
 import EditRecipeModal from './EditRecipeModal';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -37,10 +38,11 @@ export default function RecipeList() {
     setSearch(searchInput);
   };
 
-  if (isLoading)
+  if (isLoading) {
     return (
       <div className="text-gray-600 dark:text-gray-300">Loading recipes...</div>
     );
+  }
 
   return (
     <div className="space-y-4 mt-8">
@@ -154,9 +156,22 @@ export default function RecipeList() {
           Next
         </button>
       </div>
-      {editing && (
-        <EditRecipeModal recipe={editing} onClose={() => setEditing(null)} />
-      )}
+      <AnimatePresence initial={false} mode="wait">
+        {editing && (
+          <motion.div
+            key="edit-modal"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <EditRecipeModal
+              recipe={editing}
+              onClose={() => setEditing(null)}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
