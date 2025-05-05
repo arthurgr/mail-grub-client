@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+import EditRecipeModal from "./EditRecipeModal";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -8,6 +9,7 @@ export default function RecipeList() {
     const [page, setPage] = useState(0);
     const [searchInput, setSearchInput] = useState("");
     const [search, setSearch] = useState("");
+    const [editing, setEditing] = useState<null | any>(null);
 
     const queryClient = useQueryClient();
     const size = 5;
@@ -78,6 +80,12 @@ export default function RecipeList() {
                             <td className="border border-gray-200 dark:border-gray-700 px-4 py-2">${r.costPerItem}</td>
                             <td className="border border-gray-200 dark:border-gray-700 px-4 py-2">
                                 <button
+                                    onClick={() => setEditing(r)}
+                                    className="text-blue-500 hover:underline mr-2"
+                                >
+                                    Edit
+                                </button>
+                                <button
                                     onClick={() => deleteMutation.mutate(r.id)}
                                     className="text-red-500 hover:underline"
                                 >
@@ -117,6 +125,9 @@ export default function RecipeList() {
                     Next
                 </button>
             </div>
+            {editing && (
+                <EditRecipeModal recipe={editing} onClose={() => setEditing(null)} />
+            )}
         </div>
     );
 }
