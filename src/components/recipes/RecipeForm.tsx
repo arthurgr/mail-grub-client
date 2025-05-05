@@ -3,12 +3,6 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import RecipeFormFields from './RecipeFormFields';
 
-type Ingredient = {
-  id: number;
-  name: string;
-  measurementType: string;
-};
-
 export default function RecipeForm() {
   const queryClient = useQueryClient();
   const [name, setName] = useState('');
@@ -26,8 +20,11 @@ export default function RecipeForm() {
   });
 
   const mutation = useMutation({
-    mutationFn: (newRecipe) =>
-      axios.post('http://localhost:8080/recipes/add', newRecipe),
+    mutationFn: (newRecipe: {
+      name: string;
+      itemsMade: number;
+      ingredients: { ingredientId: number; amount: number }[];
+    }) => axios.post('http://localhost:8080/recipes/add', newRecipe),
     onSuccess: () => {
       queryClient.invalidateQueries(['recipes']);
       setName('');
