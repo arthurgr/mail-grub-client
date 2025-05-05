@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+import EditIngredientModal from "./EditIngredientModal";
 
 export default function IngredientList() {
   const [page, setPage] = useState(0);
   const [search, setSearch] = useState("");
   const [searchInput, setSearchInput] = useState("");
+  const [editing, setEditing] = useState(null);
 
   const size = 5;
   const queryClient = useQueryClient();
@@ -75,6 +77,12 @@ export default function IngredientList() {
                   <td className="border border-gray-200 dark:border-gray-700 px-4 py-2">${i.costPerOunce}</td>
                   <td className="border border-gray-200 dark:border-gray-700 px-4 py-2">
                     <button
+                        onClick={() => setEditing(i)}
+                        className="text-blue-500 hover:underline"
+                    >
+                      Edit
+                    </button>
+                    <button
                         onClick={() => deleteMutation.mutate(i.id)}
                         className="text-red-500 hover:underline"
                     >
@@ -114,6 +122,12 @@ export default function IngredientList() {
             Next
           </button>
         </div>
+        {editing && (
+            <EditIngredientModal
+                ingredient={editing}
+                onClose={() => setEditing(null)}
+            />
+        )}
       </div>
   );
 }
