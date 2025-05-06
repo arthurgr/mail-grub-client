@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 type Props = {
   form: {
@@ -10,24 +10,42 @@ type Props = {
   handleChange: (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => void;
+  hasSubmitted: boolean;
 };
 
-export default function IngredientFormFields({ form, handleChange }: Props) {
+export default function IngredientFormFields({
+  form,
+  handleChange,
+  hasSubmitted,
+}: Props) {
   const [touched, setTouched] = useState({
     name: false,
     purchaseSize: false,
     averageCost: false,
   });
 
+  useEffect(() => {
+    if (!hasSubmitted) {
+      setTouched({
+        name: false,
+        purchaseSize: false,
+        averageCost: false,
+      });
+    }
+  }, [hasSubmitted]);
+
   const errors = {
-    name: touched.name && form.name.trim() === '' ? 'Name is required.' : '',
+    name:
+      (hasSubmitted || touched.name) && form.name.trim() === ''
+        ? 'Name is required.'
+        : '',
     purchaseSize:
-      touched.purchaseSize &&
+      (hasSubmitted || touched.purchaseSize) &&
       (!form.purchaseSize || isNaN(Number(form.purchaseSize)))
         ? 'Purchase size must be a number.'
         : '',
     averageCost:
-      touched.averageCost &&
+      (hasSubmitted || touched.averageCost) &&
       (!form.averageCost || isNaN(Number(form.averageCost)))
         ? 'Average cost must be a number.'
         : '',
