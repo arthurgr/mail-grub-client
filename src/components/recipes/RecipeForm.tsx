@@ -10,6 +10,7 @@ export default function RecipeForm() {
   const [ingredients, setIngredients] = useState<
     { ingredientId: number; amount: number | '' }[]
   >([]);
+  const [hasSubmitted, setHasSubmitted] = useState(false);
 
   const { data: ingredientData } = useQuery({
     queryKey: ['ingredientsList'],
@@ -30,16 +31,26 @@ export default function RecipeForm() {
       setName('');
       setItemsMade('');
       setIngredients([]);
+      setHasSubmitted(false);
     },
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name || !itemsMade || ingredients.length === 0) return;
+    setHasSubmitted(true);
+
+    const valid =
+      name.trim() !== '' &&
+      itemsMade !== '' &&
+      Number(itemsMade) > 0 &&
+      ingredients.length > 0 &&
+      ingredients.every((i) => i.amount !== '' && Number(i.amount) > 0);
+
+    if (!valid) return;
 
     const recipe = {
       name,
-      itemsMade,
+      itemsMade: Number(itemsMade),
       ingredients: ingredients.map((i) => ({
         ingredientId: i.ingredientId,
         amount: Number(i.amount),
@@ -60,6 +71,7 @@ export default function RecipeForm() {
         ingredients={ingredients}
         setIngredients={setIngredients}
         ingredientData={ingredientData}
+        hasSubmitted={hasSubmitted}
       />
 
       <div>
