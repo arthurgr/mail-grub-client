@@ -14,6 +14,8 @@ export default function IngredientForm() {
     averageCost: '',
   });
 
+  const [hasSubmitted, setHasSubmitted] = useState(false);
+
   const mutation = useMutation({
     mutationFn: (newIngredient: {
       name: string;
@@ -29,6 +31,7 @@ export default function IngredientForm() {
         purchaseSize: '',
         averageCost: '',
       });
+      setHasSubmitted(false);
     },
   });
 
@@ -40,6 +43,7 @@ export default function IngredientForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setHasSubmitted(true);
     mutation.mutate({
       ...form,
       purchaseSize: parseFloat(form.purchaseSize),
@@ -50,7 +54,11 @@ export default function IngredientForm() {
   return (
     <form onSubmit={handleSubmit} className="mb-6 space-y-4">
       <h2 className="text-lg font-semibold">Create Ingredients</h2>
-      <IngredientFormFields form={form} handleChange={handleChange} />
+      <IngredientFormFields
+        form={form}
+        handleChange={handleChange}
+        hasSubmitted={hasSubmitted}
+      />
       <button
         type="submit"
         className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
