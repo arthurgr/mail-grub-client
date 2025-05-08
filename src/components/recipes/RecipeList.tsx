@@ -100,7 +100,7 @@ export default function RecipeList() {
                 </td>
                 <td className="border border-gray-200 dark:border-gray-700 px-4 py-2">
                   {r.ingredients
-                    .map((ing: any) => `${ing.name} (${ing.amount})`)
+                    .map((ing: any) => `${ing.name} (${ing.amount} OZ)`)
                     .join(', ')}
                 </td>
                 <td className="border border-gray-200 dark:border-gray-700 px-4 py-2">
