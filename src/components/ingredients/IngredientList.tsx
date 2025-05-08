@@ -96,7 +96,7 @@ export default function IngredientList() {
                   {i.measurementType}
                 </td>
                 <td className="border border-gray-200 dark:border-gray-700 px-4 py-2">
-                  {i.purchaseSize}
+                  {i.purchaseSize} {i.measurementType}
                 </td>
                 <td className="border border-gray-200 dark:border-gray-700 px-4 py-2">
                   ${i.averageCost}
