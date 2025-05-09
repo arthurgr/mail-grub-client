@@ -37,26 +37,46 @@ export default function IngredientList() {
     setSearch(searchInput);
   };
 
+  const handleClearSearch = () => {
+    setSearch('');
+    setSearchInput('');
+    setPage(0);
+  };
+
   if (isLoading) {
     return <div className="text-gray-600 dark:text-gray-300">Loading...</div>;
   }
 
   return (
     <div className="space-y-4">
-      <form onSubmit={handleSearchSubmit} className="flex gap-2">
-        <input
-          type="text"
-          value={searchInput}
-          onChange={(e) => setSearchInput(e.target.value)}
-          placeholder="Search ingredients..."
-          className="border p-2 rounded w-full bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white focus:outline-none focus:ring"
-        />
-        <button
-          type="submit"
-          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-        >
-          Search
-        </button>
+      <form onSubmit={handleSearchSubmit} className="space-y-2">
+        <label className="text-sm font-medium text-gray-700 dark:text-gray-300 block">
+          Search Ingredients
+        </label>
+        <div className="flex gap-2">
+          <input
+            type="text"
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+            placeholder="..."
+            className="border p-2 rounded w-full bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white focus:outline-none focus:ring"
+          />
+          <button
+            type="submit"
+            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          >
+            Search
+          </button>
+          {search && (
+            <button
+              type="button"
+              onClick={handleClearSearch}
+              className="px-4 py-2 bg-gray-300 dark:bg-gray-700 text-black dark:text-white rounded hover:bg-gray-400 dark:hover:bg-gray-600"
+            >
+              Clear
+            </button>
+          )}
+        </div>
       </form>
 
       <div className="overflow-x-auto">
@@ -107,7 +127,7 @@ export default function IngredientList() {
                 <td className="border border-gray-200 dark:border-gray-700 px-4 py-2">
                   <button
                     onClick={() => setEditing(i)}
-                    className="text-blue-500 hover:underline"
+                    className="text-blue-500 hover:underline mr-2"
                   >
                     Edit
                   </button>
