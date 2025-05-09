@@ -51,7 +51,7 @@ export default function IngredientList() {
     <div className="space-y-4">
       <form onSubmit={handleSearchSubmit} className="space-y-2">
         <label className="text-sm font-medium text-gray-700 dark:text-gray-300 block">
-          Search Ingredients
+          Search
         </label>
         <div className="flex gap-2">
           <input

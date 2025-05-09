@@ -69,46 +69,52 @@ export default function RecipeFormFields({
 
   return (
     <>
-      <div className="flex gap-2">
-        <div className="flex flex-col w-full">
-          <label className="text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
-            Recipe Name
+      <div className="flex flex-wrap gap-4">
+        <div className="w-full md:flex-1">
+          <label className="text-sm font-medium text-gray-700 dark:text-gray-200">
+            Name
           </label>
           <input
             type="text"
             value={name}
+            placeholder="..."
             onChange={(e) => setName(e.target.value)}
-            className={`border px-3 py-2 rounded bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white ${
-              errors.name ? 'border-red-500' : ''
-            }`}
+            className={`mt-1 border p-2 rounded w-full bg-white dark:bg-gray-800 ${
+              errors.name
+                ? 'border-red-500'
+                : 'border-gray-300 dark:border-gray-700'
+            } dark:text-white focus:outline-none focus:ring`}
           />
           {errors.name && (
-            <span className="text-xs text-red-500">{errors.name}</span>
+            <p className="text-red-500 text-xs mt-1">{errors.name}</p>
           )}
         </div>
 
-        <div className="flex flex-col w-40">
-          <label className="text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+        <div className="md:w-[260px] flex-1">
+          <label className="text-sm font-medium text-gray-700 dark:text-gray-200">
             Items Made
           </label>
           <input
             type="number"
             value={itemsMade}
+            placeholder="..."
             onChange={(e) => setItemsMade(Number(e.target.value))}
-            className={`border px-3 py-2 rounded bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white ${
-              errors.itemsMade ? 'border-red-500' : ''
-            }`}
+            className={`mt-1 border p-2 rounded w-full bg-white dark:bg-gray-800 ${
+              errors.itemsMade
+                ? 'border-red-500'
+                : 'border-gray-300 dark:border-gray-700'
+            } dark:text-white focus:outline-none focus:ring`}
           />
           {errors.itemsMade && (
-            <span className="text-xs text-red-500">{errors.itemsMade}</span>
+            <p className="text-red-500 text-xs mt-1">{errors.itemsMade}</p>
           )}
         </div>
       </div>
 
       {ingredients.map((entry, idx) => (
-        <div key={idx} className="flex gap-2 items-center">
+        <div key={idx} className="flex gap-4 items-end mt-4">
           <div className="flex flex-col w-1/3">
-            <label className="text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+            <label className="text-sm font-medium text-gray-700 dark:text-gray-200">
               Ingredient
             </label>
             <select
@@ -116,7 +122,7 @@ export default function RecipeFormFields({
               onChange={(e) =>
                 updateIngredient(idx, 'ingredientId', Number(e.target.value))
               }
-              className="border px-3 py-2 rounded bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+              className="mt-1 border p-2 rounded bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
             >
               {ingredientData?.map((i) => (
                 <option key={i.id} value={i.id}>
@@ -127,7 +133,7 @@ export default function RecipeFormFields({
           </div>
 
           <div className="flex flex-col w-1/3">
-            <label className="text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+            <label className="text-sm font-medium text-gray-700 dark:text-gray-200">
               Amount
             </label>
             <input
@@ -136,14 +142,16 @@ export default function RecipeFormFields({
               onChange={(e) =>
                 updateIngredient(idx, 'amount', Number(e.target.value))
               }
-              className={`border px-3 py-2 rounded bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white ${
-                errors.ingredients[idx] ? 'border-red-500' : ''
+              className={`mt-1 border p-2 rounded bg-white dark:bg-gray-800 dark:text-white ${
+                errors.ingredients[idx]
+                  ? 'border-red-500'
+                  : 'border-gray-300 dark:border-gray-700'
               }`}
             />
             {errors.ingredients[idx] && (
-              <span className="text-xs text-red-500">
+              <p className="text-red-500 text-xs mt-1">
                 {errors.ingredients[idx]}
-              </span>
+              </p>
             )}
           </div>
 
@@ -162,7 +170,7 @@ export default function RecipeFormFields({
       <button
         type="button"
         onClick={addIngredient}
-        className="text-sm text-blue-500 hover:underline mt-2"
+        className="text-sm text-blue-500 hover:underline mt-4"
       >
         + Add Ingredient
       </button>

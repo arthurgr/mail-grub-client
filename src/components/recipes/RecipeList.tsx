@@ -38,6 +38,12 @@ export default function RecipeList() {
     setSearch(searchInput);
   };
 
+  const handleClearSearch = () => {
+    setSearch('');
+    setSearchInput('');
+    setPage(0);
+  };
+
   if (isLoading) {
     return (
       <div className="text-gray-600 dark:text-gray-300">Loading recipes...</div>
@@ -46,20 +52,34 @@ export default function RecipeList() {
 
   return (
     <div className="space-y-4 mt-8">
-      <form onSubmit={handleSearchSubmit} className="flex gap-2">
-        <input
-          type="text"
-          value={searchInput}
-          onChange={(e) => setSearchInput(e.target.value)}
-          placeholder="Search recipes..."
-          className="border p-2 rounded w-full bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white focus:outline-none focus:ring"
-        />
-        <button
-          type="submit"
-          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-        >
-          Search
-        </button>
+      <form onSubmit={handleSearchSubmit} className="space-y-2">
+        <label className="text-sm font-medium text-gray-700 dark:text-gray-300 block">
+          Search Recipes
+        </label>
+        <div className="flex gap-2">
+          <input
+            type="text"
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+            placeholder="..."
+            className="border p-2 rounded w-full bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white focus:outline-none focus:ring"
+          />
+          <button
+            type="submit"
+            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          >
+            Search
+          </button>
+          {search && (
+            <button
+              type="button"
+              onClick={handleClearSearch}
+              className="px-4 py-2 bg-gray-300 dark:bg-gray-700 text-black dark:text-white rounded hover:bg-gray-400 dark:hover:bg-gray-600"
+            >
+              Clear
+            </button>
+          )}
+        </div>
       </form>
 
       <div className="overflow-x-auto">
@@ -99,9 +119,11 @@ export default function RecipeList() {
                   {r.itemsMade}
                 </td>
                 <td className="border border-gray-200 dark:border-gray-700 px-4 py-2">
-                  {r.ingredients
-                    .map((ing: any) => `${ing.name} (${ing.amount} OZ)`)
-                    .join(', ')}
+                  {r.ingredients.map((ing: any, idx: number) => (
+                    <div key={idx}>
+                      {ing.name} - {ing.amount} OZ
+                    </div>
+                  ))}
                 </td>
                 <td className="border border-gray-200 dark:border-gray-700 px-4 py-2">
                   ${r.totalCost}
@@ -156,6 +178,7 @@ export default function RecipeList() {
           Next
         </button>
       </div>
+
       <AnimatePresence initial={false} mode="wait">
         {editing && (
           <motion.div

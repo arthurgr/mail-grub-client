@@ -12,10 +12,16 @@ type Props = {
 
 export default function EditIngredientModal({ ingredient, onClose }: Props) {
   const [form, setForm] = useState({ ...ingredient });
+  const [hasSubmitted, setHasSubmitted] = useState(false);
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: (updated) =>
+    mutationFn: (updated: {
+      name: string;
+      measurementType: string;
+      purchaseSize: number;
+      averageCost: number;
+    }) =>
       axios.patch(
         `${API_BASE_URL}/ingredients/update/${ingredient.id}`,
         updated,
@@ -23,6 +29,7 @@ export default function EditIngredientModal({ ingredient, onClose }: Props) {
     onSuccess: () => {
       queryClient.invalidateQueries(['ingredients']);
       onClose();
+      setHasSubmitted(false);
     },
   });
 
@@ -34,6 +41,7 @@ export default function EditIngredientModal({ ingredient, onClose }: Props) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setHasSubmitted(true);
     mutation.mutate({
       ...form,
       purchaseSize: parseFloat(form.purchaseSize),
@@ -43,10 +51,14 @@ export default function EditIngredientModal({ ingredient, onClose }: Props) {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white dark:bg-gray-900 p-6 rounded w-full max-w-md border dark:border-gray-700">
+      <div className="bg-white dark:bg-gray-900 p-6 rounded w-full max-w-2xl border dark:border-gray-700">
         <h2 className="text-lg font-semibold mb-4">Edit Ingredient</h2>
         <form onSubmit={handleSubmit} className="space-y-3">
-          <IngredientFormFields form={form} handleChange={handleChange} />
+          <IngredientFormFields
+            form={form}
+            handleChange={handleChange}
+            hasSubmitted={hasSubmitted}
+          />
           <div className="flex justify-end gap-2 mt-4">
             <button
               type="button"
