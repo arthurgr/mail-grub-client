@@ -52,7 +52,7 @@ export default function IngredientForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mb-6 space-y-4">
+    <form onSubmit={handleSubmit} className="mb-8 space-y-4">
       <h2 className="text-lg font-semibold">Create Ingredients</h2>
       <IngredientFormFields
         form={form}
