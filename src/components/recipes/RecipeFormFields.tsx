@@ -8,6 +8,7 @@ type Ingredient = {
 type IngredientEntry = {
   ingredientId: number;
   amount: number | '';
+  overrideMeasurementType: string;
 };
 
 type Props = {
@@ -34,7 +35,7 @@ export default function RecipeFormFields({
   const updateIngredient = (
     idx: number,
     field: keyof IngredientEntry,
-    value: number | '',
+    value: string | number | '',
   ) => {
     setIngredients((prev) =>
       prev.map((i, iIdx) => (iIdx === idx ? { ...i, [field]: value } : i)),
@@ -45,7 +46,11 @@ export default function RecipeFormFields({
     if (ingredientData?.length) {
       setIngredients((prev) => [
         ...prev,
-        { ingredientId: ingredientData[0].id, amount: '' },
+        {
+          ingredientId: ingredientData[0].id,
+          amount: '',
+          overrideMeasurementType: 'OZ',
+        },
       ]);
     }
   };
@@ -136,18 +141,33 @@ export default function RecipeFormFields({
             <label className="text-sm font-medium text-gray-700 dark:text-gray-200">
               Amount
             </label>
-            <input
-              type="number"
-              value={entry.amount}
-              onChange={(e) =>
-                updateIngredient(idx, 'amount', Number(e.target.value))
-              }
-              className={`mt-1 border p-2 rounded bg-white dark:bg-gray-800 dark:text-white ${
-                errors.ingredients[idx]
-                  ? 'border-red-500'
-                  : 'border-gray-300 dark:border-gray-700'
-              }`}
-            />
+            <div className="flex mt-1">
+              <input
+                type="number"
+                value={entry.amount}
+                onChange={(e) =>
+                  updateIngredient(idx, 'amount', Number(e.target.value))
+                }
+                className={`border bg-white dark:bg-gray-800 text-sm text-black dark:text-white rounded-l-md p-2 focus:outline-none focus:ring w-2/3 ${
+                  errors.ingredients[idx]
+                    ? 'border-red-500'
+                    : 'border-gray-300 dark:border-gray-700'
+                }`}
+              />
+              <select
+                value={entry.overrideMeasurementType}
+                onChange={(e) =>
+                  updateIngredient(
+                    idx,
+                    'overrideMeasurementType',
+                    e.target.value,
+                  )
+                }
+                className="border border-l-0 border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm text-black dark:text-white rounded-r-md p-2 focus:outline-none w-1/3"
+              >
+                <option value="OZ">OZ</option>
+              </select>
+            </div>
             {errors.ingredients[idx] && (
               <p className="text-red-500 text-xs mt-1">
                 {errors.ingredients[idx]}
