@@ -7,7 +7,11 @@ type Recipe = {
   id: number;
   name: string;
   itemsMade: number;
-  ingredients: { ingredientId: number; amount: number }[];
+  ingredients: {
+    ingredientId: number;
+    amount: number;
+    overrideMeasurementType?: string | null;
+  }[];
 };
 
 export default function EditRecipeModal({
@@ -24,6 +28,7 @@ export default function EditRecipeModal({
     recipe.ingredients.map((i: any) => ({
       ingredientId: i.ingredientId ?? i.id,
       amount: i.amount,
+      overrideMeasurementType: i.overrideMeasurementType ?? null,
     })),
   );
 
@@ -63,7 +68,7 @@ export default function EditRecipeModal({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-      <div className="bg-white dark:bg-gray-900 p-6 rounded shadow max-w-lg w-full space-y-4">
+      <div className="bg-white dark:bg-gray-900 p-6 rounded shadow max-w-3xl w-full space-y-4">
         <h2 className="text-xl font-semibold text-gray-800 dark:text-white">
           Edit Recipe
         </h2>
@@ -76,6 +81,7 @@ export default function EditRecipeModal({
             ingredients={ingredients}
             setIngredients={setIngredients}
             ingredientData={ingredientData}
+            hasSubmitted={false}
           />
           <div className="flex justify-end gap-2">
             <button
