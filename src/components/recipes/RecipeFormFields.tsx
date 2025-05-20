@@ -1,4 +1,5 @@
 import React from 'react';
+import IngredientSelect from '../IngredientSelect';
 
 type Ingredient = {
   id: number;
@@ -72,6 +73,9 @@ export default function RecipeFormFields({
     ),
   };
 
+  const ingredientOptions =
+    ingredientData?.map((i) => ({ value: i.id, label: i.name })) ?? [];
+
   return (
     <>
       <div className="flex flex-wrap gap-4">
@@ -122,19 +126,11 @@ export default function RecipeFormFields({
             <label className="text-sm font-medium text-gray-700 dark:text-gray-200">
               Ingredient
             </label>
-            <select
+            <IngredientSelect
               value={entry.ingredientId}
-              onChange={(e) =>
-                updateIngredient(idx, 'ingredientId', Number(e.target.value))
-              }
-              className="mt-1 border p-2 rounded bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-            >
-              {ingredientData?.map((i) => (
-                <option key={i.id} value={i.id}>
-                  {i.name}
-                </option>
-              ))}
-            </select>
+              onChange={(val) => updateIngredient(idx, 'ingredientId', val)}
+              options={ingredientOptions}
+            />
           </div>
 
           <div className="flex flex-col w-1/3">
@@ -166,6 +162,8 @@ export default function RecipeFormFields({
                 className="border border-l-0 border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm text-black dark:text-white rounded-r-md p-2 focus:outline-none w-1/3"
               >
                 <option value="OZ">OZ</option>
+                <option value="LB">LB</option>
+                <option value="KG">KG</option>
               </select>
             </div>
             {errors.ingredients[idx] && (
