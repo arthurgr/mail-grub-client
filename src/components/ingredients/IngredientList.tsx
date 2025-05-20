@@ -10,7 +10,7 @@ export default function IngredientList() {
   const [searchInput, setSearchInput] = useState('');
   const [editing, setEditing] = useState(null);
 
-  const size = 5;
+  const size = 20;
   const queryClient = useQueryClient();
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 

@@ -13,7 +13,7 @@ export default function RecipeList() {
   const [editing, setEditing] = useState<null | any>(null);
 
   const queryClient = useQueryClient();
-  const size = 5;
+  const size = 20;
 
   const { data, isLoading } = useQuery({
     queryKey: ['recipes', page, search],
