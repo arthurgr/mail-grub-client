@@ -55,10 +55,14 @@ export default function IngredientFormFields({
     <div className="flex flex-col gap-4">
       <div className="flex flex-wrap gap-4">
         <div className="w-full md:flex-1">
-          <label className="text-sm font-medium text-gray-700 dark:text-gray-200">
+          <label
+            htmlFor="name"
+            className="text-sm font-medium text-gray-700 dark:text-gray-200"
+          >
             Name
           </label>
           <input
+            id="name"
             name="name"
             value={form.name}
             onChange={handleChange}
@@ -115,10 +119,14 @@ export default function IngredientFormFields({
         </div>
 
         <div className="md:w-[200px] flex-1">
-          <label className="text-sm font-medium text-gray-700 dark:text-gray-200">
+          <label
+            htmlFor="averageCost"
+            className="text-sm font-medium text-gray-700 dark:text-gray-200"
+          >
             Average Cost
           </label>
           <input
+            id="averageCost"
             name="averageCost"
             value={form.averageCost}
             onChange={handleChange}
