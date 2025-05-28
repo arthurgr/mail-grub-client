@@ -3,13 +3,17 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import RecipeFormFields from './RecipeFormFields';
 
+export type IngredientEntry = {
+  ingredientId: number;
+  amount: number | '';
+  overrideMeasurementType: string;
+};
+
 export default function RecipeForm() {
   const queryClient = useQueryClient();
   const [name, setName] = useState('');
   const [itemsMade, setItemsMade] = useState<number | ''>('');
-  const [ingredients, setIngredients] = useState<
-    { ingredientId: number; amount: number | '' }[]
-  >([]);
+  const [ingredients, setIngredients] = useState<IngredientEntry[]>([]);
   const [hasSubmitted, setHasSubmitted] = useState(false);
 
   const { data: ingredientData } = useQuery({

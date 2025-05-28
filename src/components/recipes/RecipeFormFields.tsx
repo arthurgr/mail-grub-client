@@ -138,7 +138,6 @@ export default function RecipeFormFields({
               Ingredient
             </label>
             <IngredientSelect
-              inputId={`ingredient-select-${idx}`}
               value={entry.ingredientId}
               onChange={(val) => updateIngredient(idx, 'ingredientId', val)}
               options={ingredientOptions}

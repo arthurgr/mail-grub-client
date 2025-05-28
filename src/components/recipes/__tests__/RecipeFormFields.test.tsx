@@ -7,7 +7,7 @@ describe('RecipeFormFields', () => {
     const props = {
       name: '',
       setName: vi.fn(),
-      itemsMade: '',
+      itemsMade: '' as '',
       setItemsMade: vi.fn(),
       ingredients: [],
       setIngredients: vi.fn(),

@@ -7,6 +7,9 @@
     "isolatedModules": true,
     "esModuleInterop": true,
     "jsx": "react-jsx",
-    "include": ["src", "vite-env.d.ts"]
-  }
+    "types": ["vite/client", "react", "react-dom"],
+    "skipLibCheck": true
+  },
+  "include": ["src", "vite-env.d.ts"],
+  "exclude": ["node_modules", "dist"]
 }
