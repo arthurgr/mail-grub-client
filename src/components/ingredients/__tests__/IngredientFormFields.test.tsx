@@ -44,4 +44,20 @@ describe('IngredientFormFields', () => {
 
     expect(handleChange).toHaveBeenCalled();
   });
+
+  it('shows error if purchaseSize is not a number', () => {
+    setup({ purchaseSize: 'abc' });
+
+    expect(
+      screen.getByText(/Purchase size must be a number/i),
+    ).toBeInTheDocument();
+  });
+
+  it('shows error if averageCost is not a number', () => {
+    setup({ averageCost: 'xyz' });
+
+    expect(
+      screen.getByText(/Average cost must be a number/i),
+    ).toBeInTheDocument();
+  });
 });

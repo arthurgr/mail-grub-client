@@ -80,10 +80,14 @@ export default function RecipeFormFields({
     <>
       <div className="flex flex-wrap gap-4">
         <div className="w-full md:flex-1">
-          <label className="text-sm font-medium text-gray-700 dark:text-gray-200">
+          <label
+            htmlFor="recipe-name"
+            className="text-sm font-medium text-gray-700 dark:text-gray-200"
+          >
             Name
           </label>
           <input
+            id="recipe-name"
             type="text"
             value={name}
             placeholder="..."
@@ -100,10 +104,14 @@ export default function RecipeFormFields({
         </div>
 
         <div className="md:w-[260px] flex-1">
-          <label className="text-sm font-medium text-gray-700 dark:text-gray-200">
+          <label
+            htmlFor="items-made"
+            className="text-sm font-medium text-gray-700 dark:text-gray-200"
+          >
             Items Made
           </label>
           <input
+            id="items-made"
             type="number"
             value={itemsMade}
             placeholder="..."
@@ -123,10 +131,14 @@ export default function RecipeFormFields({
       {ingredients.map((entry, idx) => (
         <div key={idx} className="flex gap-4 items-end mt-4">
           <div className="flex flex-col w-1/3">
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-200">
+            <label
+              htmlFor={`ingredient-select-${idx}`}
+              className="text-sm font-medium text-gray-700 dark:text-gray-200"
+            >
               Ingredient
             </label>
             <IngredientSelect
+              inputId={`ingredient-select-${idx}`}
               value={entry.ingredientId}
               onChange={(val) => updateIngredient(idx, 'ingredientId', val)}
               options={ingredientOptions}
@@ -134,11 +146,15 @@ export default function RecipeFormFields({
           </div>
 
           <div className="flex flex-col w-1/3">
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-200">
+            <label
+              htmlFor={`ingredient-amount-${idx}`}
+              className="text-sm font-medium text-gray-700 dark:text-gray-200"
+            >
               Amount
             </label>
             <div className="flex mt-1">
               <input
+                id={`ingredient-amount-${idx}`}
                 type="number"
                 value={entry.amount}
                 onChange={(e) =>
@@ -151,6 +167,7 @@ export default function RecipeFormFields({
                 }`}
               />
               <select
+                id={`ingredient-unit-${idx}`}
                 value={entry.overrideMeasurementType}
                 onChange={(e) =>
                   updateIngredient(
