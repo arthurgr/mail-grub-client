@@ -77,4 +77,13 @@ describe('IngredientList', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Clear' }));
     expect(screen.getByPlaceholderText('...')).toHaveValue('');
   });
+
+  // it('shows loading state', async () => {
+  //   mockedAxios.get = vi.fn(() => new Promise(() => {})); // never resolves
+  //   renderWithClient(<IngredientList />);
+  //
+  //   await waitFor(() => {
+  //     expect(screen.getByText((text) => text.includes('Loading'))).toBeInTheDocument();
+  //   });
+  // });
 });
