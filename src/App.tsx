@@ -5,6 +5,7 @@ import IngredientList from './components/ingredients/IngredientList';
 import RecipeForm from './components/recipes/RecipeForm';
 import RecipeList from './components/recipes/RecipeList';
 import ThemeToggle from './components/ThemeToggle';
+import PackagingForm from './components/packaging/PackagingForm';
 
 export default function App() {
   const location = useLocation();
@@ -20,6 +21,7 @@ export default function App() {
         {[
           { label: 'Ingredients', path: '/ingredients' },
           { label: 'Recipes', path: '/recipes' },
+          { label: 'Packaging', path: '/packaging' },
         ].map(({ label, path }) => (
           <Link
             key={path}
@@ -52,6 +54,14 @@ export default function App() {
             <>
               <RecipeForm />
               <RecipeList />
+            </>
+          }
+        />
+        <Route
+          path="/packaging"
+          element={
+            <>
+              <PackagingForm />
             </>
           }
         />
