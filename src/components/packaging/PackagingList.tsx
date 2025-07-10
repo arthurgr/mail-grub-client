@@ -82,22 +82,24 @@ export default function PackagingList() {
         <table className="min-w-full table-auto text-sm border border-gray-200 dark:border-gray-700">
           <thead className="bg-gray-100 dark:bg-gray-800">
             <tr>
-              <th className="px-4 py-2 border dark:border-gray-700">
+              <th className="border border-gray-200 dark:border-gray-700 px-4 py-2 text-left">
                 Materials
               </th>
-              <th className="px-4 py-2 border dark:border-gray-700">
+              <th className="border border-gray-200 dark:border-gray-700 px-4 py-2 text-left">
                 Avg Cost
               </th>
-              <th className="px-4 py-2 border dark:border-gray-700">
+              <th className="border border-gray-200 dark:border-gray-700 px-4 py-2 text-left">
                 Quantity
               </th>
-              <th className="px-4 py-2 border dark:border-gray-700">
+              <th className="border border-gray-200 dark:border-gray-700 px-4 py-2 text-left">
                 Cost / Unit
               </th>
-              <th className="px-4 py-2 border dark:border-gray-700">
+              <th className="border border-gray-200 dark:border-gray-700 px-4 py-2 text-left">
                 Procurement
               </th>
-              <th className="px-4 py-2 border dark:border-gray-700">Actions</th>
+              <th className="border border-gray-200 dark:border-gray-700 px-4 py-2 text-left">
+                Actions
+              </th>
             </tr>
           </thead>
           <tbody>
