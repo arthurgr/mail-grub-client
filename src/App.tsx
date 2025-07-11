@@ -7,6 +7,8 @@ import RecipeList from './components/recipes/RecipeList';
 import ThemeToggle from './components/ThemeToggle';
 import PackagingForm from './components/packaging/PackagingForm';
 import PackagingList from './components/packaging/PackagingList';
+import TaxForm from './components/taxes/TaxForm';
+import TaxList from './components/taxes/TaxList';
 
 export default function App() {
   const location = useLocation();
@@ -23,6 +25,7 @@ export default function App() {
           { label: 'Ingredients', path: '/ingredients' },
           { label: 'Recipes', path: '/recipes' },
           { label: 'Packaging', path: '/packaging' },
+          { label: 'Taxes', path: '/taxes' },
         ].map(({ label, path }) => (
           <Link
             key={path}
@@ -64,6 +67,15 @@ export default function App() {
             <>
               <PackagingForm />
               <PackagingList />
+            </>
+          }
+        />
+        <Route
+          path="/taxes"
+          element={
+            <>
+              <TaxForm />
+              <TaxList />
             </>
           }
         />
