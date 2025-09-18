@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
 import IngredientFormFields from './IngredientFormFields';
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+import { api } from '../../api/client';
 
 export default function IngredientForm() {
   const queryClient = useQueryClient();
@@ -22,7 +20,7 @@ export default function IngredientForm() {
       measurementType: string;
       purchaseSize: number;
       averageCost: number;
-    }) => axios.post(`${API_BASE_URL}/ingredients/add`, newIngredient),
+    }) => api.post(`/ingredients/add`, newIngredient),
     onSuccess: () => {
       queryClient.invalidateQueries(['ingredients']);
       setForm({

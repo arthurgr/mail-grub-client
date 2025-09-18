@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
 import { AnimatePresence, motion } from 'framer-motion';
 import EditIngredientModal from './EditIngredientModal';
 import { useAuth } from '../../auth/AuthContext';
+import { api } from '../../api/client';
 
 export default function IngredientList() {
   const [page, setPage] = useState(0);
@@ -13,38 +13,28 @@ export default function IngredientList() {
 
   const size = 20;
   const queryClient = useQueryClient();
-  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
 
-  const { user, getIdToken } = useAuth();
+  const { user } = useAuth();
 
   const { data, isLoading } = useQuery({
     queryKey: ['ingredients', page, search, user?.uid],
     queryFn: async () => {
-      const token = await getIdToken(); // ✅ Firebase ID token
-      const res = await axios.get(`${API_BASE_URL}/ingredients`, {
+      const res = await api.get('/ingredients', {
         params: { page, size, name: search },
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        withCredentials: true, // optional; keep if you need cookies
       });
       return res.data;
     },
-    enabled: !!user, // only run once logged in
+    enabled: !!user,
     keepPreviousData: true,
   });
 
   const deleteMutation = useMutation({
     mutationFn: async (id: number) => {
-      const token = await getIdToken();
-      return axios.delete(`${API_BASE_URL}/ingredients/delete/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        withCredentials: true,
-      });
+      return api.delete(`/ingredients/delete/${id}`);
     },
-    onSuccess: () => queryClient.invalidateQueries(['ingredients']),
+    onSuccess: () => {
+      queryClient.invalidateQueries(['ingredients']);
+    },
   });
 
   const handleSearchSubmit = (e: React.FormEvent) => {

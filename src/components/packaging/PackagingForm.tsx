@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
 import PackagingFormFields from './PackagingFormFields';
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+import { api } from '../../api/client';
 
 export default function PackagingForm() {
   const queryClient = useQueryClient();
@@ -22,7 +20,7 @@ export default function PackagingForm() {
       quantity: number;
       averageCost: number;
       procurement: string;
-    }) => axios.post(`${API_BASE_URL}/packaging/add`, newPackaging),
+    }) => api.post(`/packaging/add`, newPackaging),
     onSuccess: () => {
       queryClient.invalidateQueries(['packaging']);
       setForm({

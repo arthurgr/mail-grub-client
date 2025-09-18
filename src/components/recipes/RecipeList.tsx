@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
 import { AnimatePresence, motion } from 'framer-motion';
 import EditRecipeModal from './EditRecipeModal';
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+import { api } from '../../api/client';
 
 export default function RecipeList() {
   const [page, setPage] = useState(0);
@@ -18,8 +16,8 @@ export default function RecipeList() {
   const { data, isLoading } = useQuery({
     queryKey: ['recipes', page, search],
     queryFn: () =>
-      axios
-        .get(`${API_BASE_URL}/recipes`, {
+      api
+        .get(`/recipes`, {
           params: { page, size, name: search },
         })
         .then((res) => res.data),
@@ -27,8 +25,7 @@ export default function RecipeList() {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (id: number) =>
-      axios.delete(`${API_BASE_URL}/recipes/delete/${id}`),
+    mutationFn: (id: number) => api.delete(`/recipes/delete/${id}`),
     onSuccess: () => queryClient.invalidateQueries(['recipes']),
   });
 
