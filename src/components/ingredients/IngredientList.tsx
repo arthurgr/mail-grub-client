@@ -3,31 +3,47 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { AnimatePresence, motion } from 'framer-motion';
 import EditIngredientModal from './EditIngredientModal';
+import { useAuth } from '../../auth/AuthContext';
 
 export default function IngredientList() {
   const [page, setPage] = useState(0);
   const [search, setSearch] = useState('');
   const [searchInput, setSearchInput] = useState('');
-  const [editing, setEditing] = useState(null);
+  const [editing, setEditing] = useState<any>(null);
 
   const size = 20;
   const queryClient = useQueryClient();
-  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
+
+  const { user, getIdToken } = useAuth();
 
   const { data, isLoading } = useQuery({
-    queryKey: ['ingredients', page, search],
-    queryFn: () =>
-      axios
-        .get(`${API_BASE_URL}/ingredients`, {
-          params: { page, size, name: search },
-        })
-        .then((res) => res.data),
+    queryKey: ['ingredients', page, search, user?.uid],
+    queryFn: async () => {
+      const token = await getIdToken(); // ✅ Firebase ID token
+      const res = await axios.get(`${API_BASE_URL}/ingredients`, {
+        params: { page, size, name: search },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true, // optional; keep if you need cookies
+      });
+      return res.data;
+    },
+    enabled: !!user, // only run once logged in
     keepPreviousData: true,
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (id: number) =>
-      axios.delete(`${API_BASE_URL}/ingredients/delete/${id}`),
+    mutationFn: async (id: number) => {
+      const token = await getIdToken();
+      return axios.delete(`${API_BASE_URL}/ingredients/delete/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      });
+    },
     onSuccess: () => queryClient.invalidateQueries(['ingredients']),
   });
 
@@ -42,6 +58,12 @@ export default function IngredientList() {
     setSearchInput('');
     setPage(0);
   };
+
+  if (!user) {
+    return (
+      <div className="text-gray-600 dark:text-gray-300">Please log in…</div>
+    );
+  }
 
   if (isLoading) {
     return <div className="text-gray-600 dark:text-gray-300">Loading...</div>;
