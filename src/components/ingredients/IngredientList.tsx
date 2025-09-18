@@ -4,6 +4,16 @@ import { AnimatePresence, motion } from 'framer-motion';
 import EditIngredientModal from './EditIngredientModal';
 import { useAuth } from '../../auth/AuthContext';
 import { api } from '../../api/client';
+import {
+  Table,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
+  TrHead,
+  TableContainer,
+} from '../common/TableElements';
 
 export default function IngredientList() {
   const [page, setPage] = useState(0);
@@ -91,52 +101,29 @@ export default function IngredientList() {
         </div>
       </form>
 
-      <div className="overflow-x-auto">
-        <table className="min-w-full table-auto text-sm border border-gray-200 dark:border-gray-700">
-          <thead className="bg-gray-100 dark:bg-gray-800">
-            <tr>
-              <th className="border border-gray-200 dark:border-gray-700 px-4 py-2 text-left">
-                Name
-              </th>
-              <th className="border border-gray-200 dark:border-gray-700 px-4 py-2 text-left">
-                Measurement
-              </th>
-              <th className="border border-gray-200 dark:border-gray-700 px-4 py-2 text-left">
-                Purchase Size
-              </th>
-              <th className="border border-gray-200 dark:border-gray-700 px-4 py-2 text-left">
-                Avg Cost
-              </th>
-              <th className="border border-gray-200 dark:border-gray-700 px-4 py-2 text-left">
-                Cost/Oz
-              </th>
-              <th className="border border-gray-200 dark:border-gray-700 px-4 py-2 text-left">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody>
+      <TableContainer>
+        <Table>
+          <Thead>
+            <TrHead>
+              <Th>Name</Th>
+              <Th>Measurement</Th>
+              <Th>Purchase Size</Th>
+              <Th>Avg Cost</Th>
+              <Th>Cost/Oz</Th>
+              <Th>Actions</Th>
+            </TrHead>
+          </Thead>
+          <Tbody>
             {data?.content?.map((i: any) => (
-              <tr
-                key={i.id}
-                className="hover:bg-gray-50 dark:hover:bg-gray-700"
-              >
-                <td className="border border-gray-200 dark:border-gray-700 px-4 py-2">
-                  {i.name}
-                </td>
-                <td className="border border-gray-200 dark:border-gray-700 px-4 py-2">
-                  {i.measurementType}
-                </td>
-                <td className="border border-gray-200 dark:border-gray-700 px-4 py-2">
+              <Tr key={i.id}>
+                <Td>{i.name}</Td>
+                <Td>{i.measurementType}</Td>
+                <Td>
                   {i.purchaseSize} {i.measurementType}
-                </td>
-                <td className="border border-gray-200 dark:border-gray-700 px-4 py-2">
-                  ${i.averageCost}
-                </td>
-                <td className="border border-gray-200 dark:border-gray-700 px-4 py-2">
-                  ${i.costPerOunce}
-                </td>
-                <td className="border border-gray-200 dark:border-gray-700 px-4 py-2">
+                </Td>
+                <Td>${i.averageCost}</Td>
+                <Td>${i.costPerOunce}</Td>
+                <Td>
                   <button
                     onClick={() => setEditing(i)}
                     className="text-blue-500 hover:underline mr-2"
@@ -149,12 +136,12 @@ export default function IngredientList() {
                   >
                     Delete
                   </button>
-                </td>
-              </tr>
+                </Td>
+              </Tr>
             ))}
-          </tbody>
-        </table>
-      </div>
+          </Tbody>
+        </Table>
+      </TableContainer>
 
       <div className="flex justify-between items-center text-sm">
         <button

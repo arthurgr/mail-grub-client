@@ -3,6 +3,16 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { AnimatePresence, motion } from 'framer-motion';
 import EditTaxModal from './EditTaxModal';
 import { api } from '../../api/client';
+import {
+  Table,
+  TableContainer,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
+  TrHead,
+} from '../common/TableElements';
 
 export default function TaxList() {
   const [page, setPage] = useState(0);
@@ -77,34 +87,21 @@ export default function TaxList() {
         </div>
       </form>
 
-      <div className="overflow-x-auto">
-        <table className="min-w-full table-auto text-sm border border-gray-200 dark:border-gray-700">
-          <thead className="bg-gray-100 dark:bg-gray-800">
-            <tr>
-              <th className="border border-gray-200 dark:border-gray-700 px-4 py-2 text-left">
-                Jurisdiction
-              </th>
-              <th className="border border-gray-200 dark:border-gray-700 px-4 py-2 text-left">
-                Tax Rate
-              </th>
-              <th className="border border-gray-200 dark:border-gray-700 px-4 py-2 text-left">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody>
+      <TableContainer>
+        <Table>
+          <Thead>
+            <TrHead>
+              <Th>Jurisdiction</Th>
+              <Th>Tax Rate</Th>
+              <Th>Actions</Th>
+            </TrHead>
+          </Thead>
+          <Tbody>
             {data?.content?.map((tax: any) => (
-              <tr
-                key={tax.id}
-                className="hover:bg-gray-50 dark:hover:bg-gray-700"
-              >
-                <td className="border border-gray-200 dark:border-gray-700 px-4 py-2">
-                  {tax.jurisdiction}
-                </td>
-                <td className="border border-gray-200 dark:border-gray-700 px-4 py-2">
-                  {tax.taxRate}%
-                </td>
-                <td className="border border-gray-200 dark:border-gray-700 px-4 py-2">
+              <Tr key={tax.id}>
+                <Td>{tax.jurisdiction}</Td>
+                <Td>{tax.taxRate}%</Td>
+                <Td>
                   <button
                     onClick={() => setEditing(tax)}
                     className="text-blue-500 hover:underline mr-2"
@@ -117,12 +114,12 @@ export default function TaxList() {
                   >
                     Delete
                   </button>
-                </td>
-              </tr>
+                </Td>
+              </Tr>
             ))}
-          </tbody>
-        </table>
-      </div>
+          </Tbody>
+        </Table>
+      </TableContainer>
 
       <div className="flex justify-between items-center text-sm">
         <button

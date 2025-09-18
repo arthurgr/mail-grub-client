@@ -3,6 +3,16 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { AnimatePresence, motion } from 'framer-motion';
 import EditPackagingModal from './EditPackagingModal';
 import { api } from '../../api/client';
+import {
+  Table,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
+  TrHead,
+  TableContainer,
+} from '../common/TableElements';
 
 export default function PackagingList() {
   const [page, setPage] = useState(0);
@@ -76,52 +86,27 @@ export default function PackagingList() {
         </div>
       </form>
 
-      <div className="overflow-x-auto">
-        <table className="min-w-full table-auto text-sm border border-gray-200 dark:border-gray-700">
-          <thead className="bg-gray-100 dark:bg-gray-800">
-            <tr>
-              <th className="border border-gray-200 dark:border-gray-700 px-4 py-2 text-left">
-                Materials
-              </th>
-              <th className="border border-gray-200 dark:border-gray-700 px-4 py-2 text-left">
-                Avg Cost
-              </th>
-              <th className="border border-gray-200 dark:border-gray-700 px-4 py-2 text-left">
-                Quantity
-              </th>
-              <th className="border border-gray-200 dark:border-gray-700 px-4 py-2 text-left">
-                Cost / Unit
-              </th>
-              <th className="border border-gray-200 dark:border-gray-700 px-4 py-2 text-left">
-                Procurement
-              </th>
-              <th className="border border-gray-200 dark:border-gray-700 px-4 py-2 text-left">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody>
+      <TableContainer>
+        <Table>
+          <Thead>
+            <TrHead>
+              <Th>Materials</Th>
+              <Th>Avg Cost</Th>
+              <Th>Quantity</Th>
+              <Th>Cost / Unit</Th>
+              <Th>Procurement</Th>
+              <Th>Actions</Th>
+            </TrHead>
+          </Thead>
+          <Tbody>
             {data?.content?.map((item: any) => (
-              <tr
-                key={item.id}
-                className="hover:bg-gray-50 dark:hover:bg-gray-700"
-              >
-                <td className="px-4 py-2 border dark:border-gray-700">
-                  {item.packagingMaterials}
-                </td>
-                <td className="px-4 py-2 border dark:border-gray-700">
-                  ${item.averageCost}
-                </td>
-                <td className="px-4 py-2 border dark:border-gray-700">
-                  {item.quantity}
-                </td>
-                <td className="px-4 py-2 border dark:border-gray-700">
-                  ${item.costPerUnit}
-                </td>
-                <td className="px-4 py-2 border dark:border-gray-700">
-                  {item.procurement}
-                </td>
-                <td className="px-4 py-2 border dark:border-gray-700">
+              <Tr key={item.id}>
+                <Td>{item.packagingMaterials}</Td>
+                <Td>${item.averageCost}</Td>
+                <Td>{item.quantity}</Td>
+                <Td>${item.costPerUnit}</Td>
+                <Td>{item.procurement}</Td>
+                <Td>
                   <button
                     onClick={() => setEditing(item)}
                     className="text-blue-500 hover:underline mr-2"
@@ -134,12 +119,12 @@ export default function PackagingList() {
                   >
                     Delete
                   </button>
-                </td>
-              </tr>
+                </Td>
+              </Tr>
             ))}
-          </tbody>
-        </table>
-      </div>
+          </Tbody>
+        </Table>
+      </TableContainer>
 
       <div className="flex justify-between text-sm">
         <button
