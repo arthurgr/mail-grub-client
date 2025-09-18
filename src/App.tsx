@@ -9,6 +9,25 @@ import PackagingForm from './components/packaging/PackagingForm';
 import PackagingList from './components/packaging/PackagingList';
 import TaxForm from './components/taxes/TaxForm';
 import TaxList from './components/taxes/TaxList';
+import { useAuth } from './auth/AuthContext';
+import Login from './pages/Login';
+import { UserMenu } from './components/UserMenu';
+
+export function RequireAuth({ children }: { children }) {
+  const { user, loading } = useAuth();
+  const location = useLocation();
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!user) {
+    // redirect to login and remember current path
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+
+  return children;
+}
 
 export default function App() {
   const location = useLocation();
@@ -18,6 +37,7 @@ export default function App() {
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">MailGrub</h1>
         <ThemeToggle />
+        <UserMenu />
       </div>
 
       <nav className="flex border-b dark:border-gray-700 mb-6">
@@ -46,39 +66,48 @@ export default function App() {
         <Route
           path="/ingredients"
           element={
-            <>
-              <IngredientForm />
-              <IngredientList />
-            </>
+            <RequireAuth>
+              <>
+                <IngredientForm />
+                <IngredientList />
+              </>
+            </RequireAuth>
           }
         />
         <Route
           path="/recipes"
           element={
-            <>
-              <RecipeForm />
-              <RecipeList />
-            </>
+            <RequireAuth>
+              <>
+                <RecipeForm />
+                <RecipeList />
+              </>
+            </RequireAuth>
           }
         />
         <Route
           path="/packaging"
           element={
-            <>
-              <PackagingForm />
-              <PackagingList />
-            </>
+            <RequireAuth>
+              <>
+                <PackagingForm />
+                <PackagingList />
+              </>
+            </RequireAuth>
           }
         />
         <Route
           path="/taxes"
           element={
-            <>
-              <TaxForm />
-              <TaxList />
-            </>
+            <RequireAuth>
+              <>
+                <TaxForm />
+                <TaxList />
+              </>
+            </RequireAuth>
           }
         />
+        <Route path="/login" element={<Login />} />
         <Route path="*" element={<div>404 Not Found</div>} />
       </Routes>
     </div>
