@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
 import { AnimatePresence, motion } from 'framer-motion';
 import EditPackagingModal from './EditPackagingModal';
 import { api } from '../../api/client';
