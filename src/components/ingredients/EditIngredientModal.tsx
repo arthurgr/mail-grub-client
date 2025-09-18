@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import IngredientFormFields from './IngredientFormFields';
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+import { api } from '../../api/client';
 
 type Props = {
   ingredient: any;
@@ -21,11 +19,7 @@ export default function EditIngredientModal({ ingredient, onClose }: Props) {
       measurementType: string;
       purchaseSize: number;
       averageCost: number;
-    }) =>
-      axios.patch(
-        `${API_BASE_URL}/ingredients/update/${ingredient.id}`,
-        updated,
-      ),
+    }) => api.patch(`/ingredients/update/${ingredient.id}`, updated),
     onSuccess: () => {
       queryClient.invalidateQueries(['ingredients']);
       onClose();

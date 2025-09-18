@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
 import { AnimatePresence, motion } from 'framer-motion';
 import EditTaxModal from './EditTaxModal';
+import { api } from '../../api/client';
 
 export default function TaxList() {
   const [page, setPage] = useState(0);
@@ -12,13 +12,12 @@ export default function TaxList() {
 
   const size = 20;
   const queryClient = useQueryClient();
-  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const { data, isLoading } = useQuery({
     queryKey: ['taxes', page, search],
     queryFn: () =>
-      axios
-        .get(`${API_BASE_URL}/taxes`, {
+      api
+        .get(`/taxes`, {
           params: { page, size, jurisdiction: search },
         })
         .then((res) => res.data),
@@ -26,8 +25,7 @@ export default function TaxList() {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (id: number) =>
-      axios.delete(`${API_BASE_URL}/taxes/delete/${id}`),
+    mutationFn: (id: number) => api.delete(`/taxes/delete/${id}`),
     onSuccess: () => queryClient.invalidateQueries(['taxes']),
   });
 

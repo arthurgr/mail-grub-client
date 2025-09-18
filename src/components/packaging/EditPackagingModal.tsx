@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import PackagingFormFields from './PackagingFormFields';
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+import { api } from '../../api/client';
 
 type Props = {
   packaging: any;
@@ -21,8 +19,7 @@ export default function EditPackagingModal({ packaging, onClose }: Props) {
       averageCost: number;
       quantity: number;
       procurement: string;
-    }) =>
-      axios.patch(`${API_BASE_URL}/packaging/update/${packaging.id}`, updated),
+    }) => api.patch(`/packaging/update/${packaging.id}`, updated),
     onSuccess: () => {
       queryClient.invalidateQueries(['packaging']);
       onClose();

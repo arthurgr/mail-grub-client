@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
 import TaxFormFields from './TaxFormFields';
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+import { api } from '../../api/client';
 
 export default function TaxForm() {
   const queryClient = useQueryClient();
@@ -16,7 +14,7 @@ export default function TaxForm() {
 
   const mutation = useMutation({
     mutationFn: (newTax: { jurisdiction: string; taxRate: number }) =>
-      axios.post(`${API_BASE_URL}/taxes/add`, newTax),
+      api.post(`/taxes/add`, newTax),
     onSuccess: () => {
       queryClient.invalidateQueries(['taxes']);
       setForm({ jurisdiction: '', taxRate: '' });
