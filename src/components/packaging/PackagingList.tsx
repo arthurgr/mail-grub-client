@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { AnimatePresence, motion } from 'framer-motion';
 import EditPackagingModal from './EditPackagingModal';
 import { api } from '../../api/client';
 import {
@@ -12,7 +11,10 @@ import {
   Tr,
   TrHead,
   TableContainer,
-} from '../common/TableElements';
+} from '../common/Tables/TableElements';
+import TableSearch from '../common/Tables/TableSearch';
+import TableFooter from '../common/Tables/TableFooter';
+import ModalAnimation from '../common/Modals/ModalAnimation';
 
 export default function PackagingList() {
   const [page, setPage] = useState(0);
@@ -56,35 +58,13 @@ export default function PackagingList() {
 
   return (
     <div className="space-y-4">
-      <form onSubmit={handleSearchSubmit} className="space-y-2">
-        <label className="text-sm font-medium text-gray-700 dark:text-gray-300 block">
-          Search
-        </label>
-        <div className="flex gap-2">
-          <input
-            type="text"
-            value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)}
-            placeholder="..."
-            className="border p-2 rounded w-full bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white focus:outline-none focus:ring"
-          />
-          <button
-            type="submit"
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-          >
-            Search
-          </button>
-          {search && (
-            <button
-              type="button"
-              onClick={handleClearSearch}
-              className="px-4 py-2 bg-gray-300 dark:bg-gray-700 text-black dark:text-white rounded hover:bg-gray-400 dark:hover:bg-gray-600"
-            >
-              Clear
-            </button>
-          )}
-        </div>
-      </form>
+      <TableSearch
+        search={search}
+        searchInput={searchInput}
+        onSearchInputChange={setSearchInput}
+        onSubmit={handleSearchSubmit}
+        onClear={handleClearSearch}
+      />
 
       <TableContainer>
         <Table>
@@ -126,42 +106,20 @@ export default function PackagingList() {
         </Table>
       </TableContainer>
 
-      <div className="flex justify-between text-sm">
-        <button
-          onClick={() => setPage((prev) => Math.max(prev - 1, 0))}
-          disabled={page === 0}
-          className={`px-4 py-2 rounded ${page === 0 ? 'bg-gray-300 dark:bg-gray-700 cursor-not-allowed' : 'bg-blue-500 text-white hover:bg-blue-600'}`}
-        >
-          Previous
-        </button>
-        <span className="text-gray-700 dark:text-gray-300">
-          Page {data?.meta?.page + 1} of {data?.meta?.totalPages}
-        </span>
-        <button
-          onClick={() => setPage((prev) => prev + 1)}
-          disabled={data?.meta?.last}
-          className={`px-4 py-2 rounded ${data?.meta?.last ? 'bg-gray-300 dark:bg-gray-700 cursor-not-allowed' : 'bg-blue-500 text-white hover:bg-blue-600'}`}
-        >
-          Next
-        </button>
-      </div>
+      <TableFooter
+        page={page}
+        totalPages={data?.meta?.totalPages ?? 1}
+        isLastPage={!!data?.meta?.last}
+        onPrevious={() => setPage((prev) => Math.max(prev - 1, 0))}
+        onNext={() => setPage((prev) => prev + 1)}
+      />
 
-      <AnimatePresence initial={false} mode="wait">
-        {editing && (
-          <motion.div
-            key="edit-packaging"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-          >
-            <EditPackagingModal
-              packaging={editing}
-              onClose={() => setEditing(null)}
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <ModalAnimation isOpen={!!editing}>
+        <EditPackagingModal
+          packaging={editing}
+          onClose={() => setEditing(null)}
+        />
+      </ModalAnimation>
     </div>
   );
 }
