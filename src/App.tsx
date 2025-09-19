@@ -36,7 +36,6 @@ export default function App() {
     <div className="p-6 max-w-4xl mx-auto dark:bg-gray-900 dark:text-white min-h-screen">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">MailGrub</h1>
-        <ThemeToggle />
         <UserMenu />
       </div>
 

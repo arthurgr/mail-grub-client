@@ -1,5 +1,6 @@
 import React from 'react';
 import { useAuth } from '../auth/AuthContext';
+import ThemeToggle from './ThemeToggle';
 
 export const UserMenu: React.FC = () => {
   const { user, logout, loading } = useAuth();
@@ -13,13 +14,17 @@ export const UserMenu: React.FC = () => {
         alt={user.displayName ?? 'User'}
       />
       <span className="text-sm">{user.displayName ?? user.email}</span>
-      <button className="rounded-lg border px-3 py-2" onClick={logout}>
+      <ThemeToggle />
+      <button
+        className="px-2.5 py-1.5 text-sm border rounded bg-white dark:bg-gray-800 dark:text-white dark:border-gray-700 focus:outline-none focus:ring hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+        onClick={logout}
+      >
         Sign out
       </button>
     </div>
   ) : (
-    <a className="rounded-lg border px-3 py-2" href="/login">
-      Sign in
-    </a>
+    <div className="flex items-center gap-3">
+      <ThemeToggle />
+    </div>
   );
 };

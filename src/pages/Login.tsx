@@ -15,11 +15,11 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="mx-auto mt-24 max-w-sm rounded-xl border p-6">
+    <div className="mx-auto mt-24 max-w-sm rounded-xl border border-b-4 p-6 dark:border-gray-700">
       <h2 className="mb-4 text-xl font-semibold">Sign in</h2>
 
       <button
-        className="mb-4 w-full rounded-lg border px-3 py-2"
+        className="w-full px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
         onClick={() => go(loginWithGoogle)}
       >
         Continue with Google
@@ -35,17 +35,20 @@ const Login: React.FC = () => {
         className="flex flex-col gap-2"
       >
         <input
-          className="rounded-lg border px-3 py-2"
+          className="mt-1 border p-2 rounded w-full bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-700 dark:text-white focus:outline-none focus:ring"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
         <input
-          className="rounded-lg border px-3 py-2"
+          className="mt-1 border p-2 rounded w-full bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-700 dark:text-white focus:outline-none focus:ring"
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button className="mt-2 rounded-lg border px-3 py-2" type="submit">
+        <button
+          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          type="submit"
+        >
           Sign in with Email
         </button>
       </form>
