@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAuth } from '../auth/AuthContext';
+import { useAuth } from '../../auth/AuthContext';
 import ThemeToggle from './ThemeToggle';
 
 export const UserMenu: React.FC = () => {
