@@ -1,5 +1,5 @@
 import React from 'react';
-import IngredientSelect from '../IngredientSelect';
+import IngredientSelect from '../common/IngredientSelect';
 
 type Ingredient = {
   id: number;

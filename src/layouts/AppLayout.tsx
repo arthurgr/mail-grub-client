@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
-import { UserMenu } from '../components/UserMenu';
+import { UserMenu } from '../components/common/UserMenu';
 
 export default function AppLayout() {
   const location = useLocation();
