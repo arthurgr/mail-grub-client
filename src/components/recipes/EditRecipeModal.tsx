@@ -40,7 +40,7 @@ export default function EditRecipeModal({
 
   const mutation = useMutation({
     mutationFn: (updated: Recipe) =>
-      api.patch(`/recipes/update/${updated.id}`, {
+      api.patch(`/recipes/${updated.id}`, {
         name: updated.name,
         itemsMade: updated.itemsMade,
         ingredients: updated.ingredients,

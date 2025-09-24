@@ -11,7 +11,6 @@ const API_BASE_URL =
 export const api: AxiosInstance = axios.create({ baseURL: API_BASE_URL });
 
 api.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
-  // ensure headers is an AxiosHeaders instance
   if (!config.headers) {
     config.headers = new AxiosHeaders();
   }
@@ -19,8 +18,11 @@ api.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
   const user = firebaseAuth.currentUser;
   if (user) {
     const token = await user.getIdToken();
-    // use the AxiosHeaders API
     (config.headers as AxiosHeaders).set('Authorization', `Bearer ${token}`);
+
+    if (config.url && !config.url.startsWith('/tenants/')) {
+      config.url = `/tenants/${user.uid}${config.url}`;
+    }
   }
 
   return config;

@@ -36,7 +36,7 @@ export default function PackagingList() {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (id: number) => api.delete(`/packaging/delete/${id}`),
+    mutationFn: (id: number) => api.delete(`/packaging/${id}`),
     onSuccess: () => queryClient.invalidateQueries(['packaging']),
   });
 

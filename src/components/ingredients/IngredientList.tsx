@@ -27,22 +27,23 @@ export default function IngredientList() {
   const queryClient = useQueryClient();
 
   const { user } = useAuth();
+  const tenantId = user?.uid;
 
   const { data, isLoading } = useQuery({
-    queryKey: ['ingredients', page, search, user?.uid],
+    queryKey: ['ingredients', tenantId, page, search],
+    enabled: !!tenantId,
     queryFn: async () => {
-      const res = await api.get('/ingredients', {
+      const res = await api.get(`/ingredients`, {
         params: { page, size, name: search },
       });
       return res.data;
     },
-    enabled: !!user,
     keepPreviousData: true,
   });
 
   const deleteMutation = useMutation({
-    mutationFn: async (id: number) => {
-      return api.delete(`/ingredients/delete/${id}`);
+    mutationFn: (id: number) => {
+      return api.delete(`/ingredients/${id}`);
     },
     onSuccess: () => {
       queryClient.invalidateQueries(['ingredients']);

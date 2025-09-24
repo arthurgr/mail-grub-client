@@ -14,7 +14,7 @@ export default function TaxForm() {
 
   const mutation = useMutation({
     mutationFn: (newTax: { jurisdiction: string; taxRate: number }) =>
-      api.post(`/taxes/add`, newTax),
+      api.post(`/taxes`, newTax),
     onSuccess: () => {
       queryClient.invalidateQueries(['taxes']);
       setForm({ jurisdiction: '', taxRate: '' });
