@@ -37,7 +37,7 @@ export default function RecipeList() {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (id: number) => api.delete(`/recipes/delete/${id}`),
+    mutationFn: (id: number) => api.delete(`/recipes/${id}`),
     onSuccess: () => queryClient.invalidateQueries(['recipes']),
   });
 

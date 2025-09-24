@@ -20,7 +20,9 @@ export default function IngredientForm() {
       measurementType: string;
       purchaseSize: number;
       averageCost: number;
-    }) => api.post(`/ingredients/add`, newIngredient),
+    }) => {
+      return api.post(`/ingredients`, newIngredient);
+    },
     onSuccess: () => {
       queryClient.invalidateQueries(['ingredients']);
       setForm({

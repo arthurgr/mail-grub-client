@@ -20,7 +20,7 @@ export default function PackagingForm() {
       quantity: number;
       averageCost: number;
       procurement: string;
-    }) => api.post(`/packaging/add`, newPackaging),
+    }) => api.post(`/packaging`, newPackaging),
     onSuccess: () => {
       queryClient.invalidateQueries(['packaging']);
       setForm({

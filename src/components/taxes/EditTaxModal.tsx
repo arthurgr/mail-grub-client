@@ -18,7 +18,7 @@ export default function EditTaxModal({ tax, onClose }: Props) {
 
   const mutation = useMutation({
     mutationFn: (updated: { jurisdiction: string; taxRate: number }) =>
-      api.patch(`/taxes/update/${tax.id}`, updated),
+      api.patch(`/taxes/${tax.id}`, updated),
     onSuccess: () => {
       queryClient.invalidateQueries(['taxes']);
       onClose();

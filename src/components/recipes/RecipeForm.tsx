@@ -27,7 +27,7 @@ export default function RecipeForm() {
       name: string;
       itemsMade: number;
       ingredients: { ingredientId: number; amount: number }[];
-    }) => api.post('/recipes/add', newRecipe),
+    }) => api.post('/recipes', newRecipe),
     onSuccess: () => {
       queryClient.invalidateQueries(['recipes']);
       setName('');

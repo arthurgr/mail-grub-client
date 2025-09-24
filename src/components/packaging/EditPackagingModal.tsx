@@ -19,7 +19,7 @@ export default function EditPackagingModal({ packaging, onClose }: Props) {
       averageCost: number;
       quantity: number;
       procurement: string;
-    }) => api.patch(`/packaging/update/${packaging.id}`, updated),
+    }) => api.patch(`/packaging/${packaging.id}`, updated),
     onSuccess: () => {
       queryClient.invalidateQueries(['packaging']);
       onClose();

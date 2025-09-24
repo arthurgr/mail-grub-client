@@ -9,9 +9,10 @@ type Props = {
 };
 
 export default function EditIngredientModal({ ingredient, onClose }: Props) {
+  const queryClient = useQueryClient();
+
   const [form, setForm] = useState({ ...ingredient });
   const [hasSubmitted, setHasSubmitted] = useState(false);
-  const queryClient = useQueryClient();
 
   const mutation = useMutation({
     mutationFn: (updated: {
@@ -19,7 +20,7 @@ export default function EditIngredientModal({ ingredient, onClose }: Props) {
       measurementType: string;
       purchaseSize: number;
       averageCost: number;
-    }) => api.patch(`/ingredients/update/${ingredient.id}`, updated),
+    }) => api.patch(`/ingredients/${ingredient.id}`, updated),
     onSuccess: () => {
       queryClient.invalidateQueries(['ingredients']);
       onClose();

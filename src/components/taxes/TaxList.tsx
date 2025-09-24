@@ -37,7 +37,7 @@ export default function TaxList() {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (id: number) => api.delete(`/taxes/delete/${id}`),
+    mutationFn: (id: number) => api.delete(`/taxes/${id}`),
     onSuccess: () => queryClient.invalidateQueries(['taxes']),
   });
 
