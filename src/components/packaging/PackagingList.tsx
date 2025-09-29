@@ -29,7 +29,7 @@ export default function PackagingList() {
     queryFn: () =>
       api
         .get(`/packaging`, {
-          params: { page, size, packagingMaterials: search },
+          params: { page, size, name: search },
         })
         .then((res) => res.data),
     keepPreviousData: true,

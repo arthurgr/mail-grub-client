@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import EditIngredientModal from './EditIngredientModal';
-import { useAuth } from '../../auth/AuthContext';
 import { api } from '../../api/client';
 import {
   Table,
@@ -26,12 +25,8 @@ export default function IngredientList() {
   const size = 20;
   const queryClient = useQueryClient();
 
-  const { user } = useAuth();
-  const tenantId = user?.uid;
-
   const { data, isLoading } = useQuery({
-    queryKey: ['ingredients', tenantId, page, search],
-    enabled: !!tenantId,
+    queryKey: ['ingredients', page, search],
     queryFn: async () => {
       const res = await api.get(`/ingredients`, {
         params: { page, size, name: search },
@@ -61,12 +56,6 @@ export default function IngredientList() {
     setSearchInput('');
     setPage(0);
   };
-
-  if (!user) {
-    return (
-      <div className="text-gray-600 dark:text-gray-300">Please log in…</div>
-    );
-  }
 
   if (isLoading) {
     return <div className="text-gray-600 dark:text-gray-300">Loading...</div>;
